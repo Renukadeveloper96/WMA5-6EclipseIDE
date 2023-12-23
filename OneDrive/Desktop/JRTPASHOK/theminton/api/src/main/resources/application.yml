@@ -1,0 +1,81 @@
+server:
+    port: 8082
+    servlet:
+     encoding:
+      charset: UTF-8
+      force: true
+spring:
+    application:
+      name: user-service
+    servlet:
+      multipart:
+        enabled: true
+        max-file-size: 10MB
+        max-request-size: 12MB      
+    main:
+      allow-bean-definition-overriding: true
+      context: ''
+      cors-url: http://localhost:4200/      
+    mail:
+      host: smtp.gmail.com
+      port: 587
+      username: ram65210001@gmail.com
+      password: qxwjeyotieepveez
+      properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
+              required : true
+    datasource:
+        url: jdbc:mysql://localhost:3306/mintondb?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
+        username: root
+        password: rootroot
+
+
+    jpa:
+        show-sql: true
+        hibernate:
+            ddl-auto: update
+            naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL8Dialect 
+    security:
+      oauth2:
+        client:
+          registration:
+            google:
+              clientId: 1083068180133-1al4pntmg4aj95bpp18tdh0ou91bv000.apps.googleusercontent.com
+              clientSecret: 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
+              redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+              scope:
+                - email
+                - profile
+            facebook:
+              clientId: 1731121470637054
+              clientSecret: 1472fbba6dab595f76e3c78334a26c7a
+              redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+              scope:
+                - email
+                - public_profile
+
+          provider:
+            facebook:
+              authorizationUri: https://www.facebook.com/v13.0/dialog/oauth
+              tokenUri: https://graph.facebook.com/v13.0/oauth/access_token
+              userInfoUri: https://graph.facebook.com/v13.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,picture.width(250).height(250)
+app:
+  auth:
+    tokenIssuer: theminton
+    tokenSecret: 04ca023b39512e46d0c2cf4b48d5aac61d34302994c87ed4eff225dcf3b0a218739f3897051a057f9b846a69ea2927a587044164b7bae5e1306219d50b588cb1
+    tokenExpirationMsec: 864000000
+    superTokenExpirationMsec: 600000
+  cors:
+    allowedOrigins: http://localhost:4200,http://localhost:8082
+  oauth2:
+    authorizedRedirectUris:
+      - http://localhost:9595/oauth2/redirect
+      - myandroidapp://oauth2/redirect
+      - myiosapp://oauth2/redirect

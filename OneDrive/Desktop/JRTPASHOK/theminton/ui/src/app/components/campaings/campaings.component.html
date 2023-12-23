@@ -1,0 +1,81 @@
+<h3>Campaigns</h3>
+<div class="card">
+
+    <div class="card-body">
+        <p-toolbar>
+            <div class="p-toolbar-group-start">
+                <p-button icon="pi pi-plus" label="Add" (click)="moveToDetails()"></p-button>
+            </div>
+            <div class="p-toolbar-group-end">
+                <p-button icon="pi pi-filter" class="mr-2"></p-button>
+                <p-button icon="pi pi-share-alt" class="mr-2"></p-button>
+            </div>
+        </p-toolbar>
+        <br />
+        <p-table [value]="campaigns" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [rowsPerPageOptions]="[10, 25, 50]">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Name</th>
+                    <th>Active</th>
+                    <th>Start On</th>
+                    <th>Ends On</th>
+                    <th>Created By</th>
+                    <th>Groups</th>
+                    <th>Engagement</th>
+                    <th>Com. Method</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-campaign>
+                <tr>
+                    <td>{{ campaign.name }}</td>
+                    <td>{{ campaign.active }}</td>
+                    <td>{{ campaign.startOn | date: 'dd-MMM-yyyy' }}</td>
+                    <td>{{ campaign.endOn | date: 'dd-MMM-yyyy' }}</td>
+                    <td>{{ campaign.createdBy }}</td>
+                    <td>{{ campaign.groups }}</td>
+                    <td>{{ campaign.engage }}</td>
+                    <td>{{ campaign.comMethod }}</td>
+                    <td>
+                        <p-button icon="pi pi-pencil"
+                            styleClass="p-button-rounded p-button-text p-button-raised"></p-button>
+                        &nbsp;
+                        <p-button icon="pi pi-trash"
+                            styleClass="p-button-rounded p-button-text p-button-raised"></p-button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+                <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        <h4>Notes</h4>
+    </div>
+    <div class="card-body">
+        <p-toolbar>
+            <div class="p-toolbar-group-start"></div>
+            <div class="p-toolbar-group-center"></div>
+            <div class="p-toolbar-group-end">
+                <p-button icon="pi pi-plus" label="Add Notes" styleClass="mr-2" (onClick)="showNotes()"></p-button>
+            </div>
+        </p-toolbar>
+        <b><i>User 1 </i>:</b>A user should be able to add a note with his observations whenever he would like to add.
+        This note will act like a history for the contact.
+    </div>
+</div>
+
+<p-dialog header="Add Notes" [(visible)]="showAddNotes" [style]="{ width: '40vw', height: '300px' }">
+    <textarea rows="5" cols="70" pInputTextarea></textarea>
+    <br /><br />
+    <p-button label="Submit" icon="pi pi-check"></p-button>
+</p-dialog>

@@ -1,0 +1,99 @@
+<h3>Campaigns</h3>
+<div class="card">
+    <div class="card-body">
+        <table>
+            <tr>
+                <td>
+                    Name
+                </td>
+                <td>
+                    <input type="text" pInputText />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Description
+                </td>
+                <td>
+                    <input type="text" pInputText />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Active
+                </td>
+                <td>
+                    <p-checkbox [binary]="true" inputId="binary"></p-checkbox>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Start Date
+                </td>
+                <td>
+                    <p-calendar [showIcon]="true"></p-calendar>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    End Date
+                </td>
+                <td>
+                    <p-calendar [showIcon]="true"></p-calendar>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Communication Mode
+                </td>
+                <td>
+                    <p-dropdown optionLabel="name"></p-dropdown>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Groups
+                </td>
+                <td>
+                    <p-dropdown optionLabel="name"></p-dropdown>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Engagement
+                </td>
+                <td>
+                    <p-dropdown optionLabel="name"></p-dropdown>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Qsns Per Day
+                </td>
+                <td>
+                    <p-dropdown optionLabel="name"></p-dropdown>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Freq of Questions
+                </td>
+                <td>
+                    <p-dropdown optionLabel="name"></p-dropdown>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Starting hours of the day
+                </td>
+                <td>
+                    <p-dropdown optionLabel="name"></p-dropdown>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+<p-button label="Save" icon="pi pi-check"></p-button> &nbsp;&nbsp;
+<p-button label="Cancel" (click)="moveBack()" styleClass="p-button-secondary"
+    icon="pi pi-chevron-circle-left"></p-button>

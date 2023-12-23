@@ -1,0 +1,107 @@
+<h3>Insights</h3>
+<div class="card">
+    <div class="card-header">
+        <p-dropdown [options]="reports" [(ngModel)]="selectedReport" optionLabel="name"></p-dropdown>
+
+        <div style="float: right;">
+            <i class="pi pi-file-excel" style="font-size: 2rem; cursor: pointer;" title="Export To Excel"></i>
+            <i class="pi pi-file-pdf" style="font-size: 2rem; cursor: pointer;" title="Export To Pdf"></i>
+        </div>
+    </div>
+    <div class="card-body">
+        <br/>
+        <p-splitter styleClass="mb-2">
+            <ng-template pTemplate>
+                <div class="col flex align-items-center justify-content-center">
+                    <h3>$390</h3>
+                    <p>Total Spend</p>
+                </div>
+            </ng-template>
+            <ng-template pTemplate>
+                <div class="col flex align-items-center justify-content-center">
+                    <h3>18000</h3>
+                    <p>Total message sent</p>
+                </div>
+            </ng-template>
+            <ng-template pTemplate>
+                <div class="col flex align-items-center justify-content-center">
+                    <h3>90000</h3>
+                    <p>Total message received</p>
+                </div>
+            </ng-template>
+            <ng-template pTemplate>
+                <div class="col flex align-items-center justify-content-center">
+                    <h3>693</h3>
+                    <p>Total unique customer</p>
+                </div>
+            </ng-template>
+            <ng-template pTemplate>
+                <div class="col flex align-items-center justify-content-center">
+                    <h3>9</h3>
+                    <p>Total Engagements</p>
+                </div>
+            </ng-template>
+            <ng-template pTemplate>
+                <div class="col flex align-items-center justify-content-center">
+                    <h3>234</h3>
+                    <p>Repeated Customer</p>
+                </div>
+            </ng-template>
+        </p-splitter>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th></th>
+                    <th>10% Engagement</th>
+                    <th>40% Engagement</th>
+                    <th>50% Engagement</th>
+                    <th>60% Engagement</th>
+                    <th>60% Engagement</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.first }}</td>
+                    <td>{{ product.second }}</td>
+                    <td>{{ product.third }}</td>
+                    <td>{{ product.fourth }}</td>
+                    <td>{{ product.fifth }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th></th>
+                    <th>User</th>
+                    <th>Course</th>
+                    <th>Question Attempted</th>
+                    <th>Correct%</th>
+                    <th>InCorrect%</th>
+                    <th>Comments</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td><p-button icon="pi pi-check"></p-button></td>
+                    <td>{{ product.name }}</td>
+                    <td>CourseName</td>
+                    <td>{{ product.second }}</td>
+                    <td>{{ product.third }}</td>
+                    <td>{{ product.fourth }}</td>
+                    <td>{{ product.fifth }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+<p-button label="New User Group"></p-button>

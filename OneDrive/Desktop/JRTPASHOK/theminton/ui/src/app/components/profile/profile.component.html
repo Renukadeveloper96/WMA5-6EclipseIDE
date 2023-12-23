@@ -1,0 +1,35 @@
+<form [formGroup]="profileForm" (submit)="updateDetails()">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3> Profile</h3>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <td>First Name</td>
+                            <td><input type="text" [(ngModel)]="firstName" formControlName="firstName" pInputText />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Last Name</td>
+                            <td><input type="text" [(ngModel)]="lastName" formControlName="lastName" pInputText /></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td><input type="text" [(ngModel)]="email" pInputText formControlName="email" readonly />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Phone</td>
+                            <td><p-inputMask mask="9999999999" [(ngModel)]="phoneNumber" formControlName="phoneNumber"
+                                    placeholder="9999999999"></p-inputMask></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <p-button type="submit" label="Save" icon="pi pi-check"></p-button>
+        </div>
+    </div>
+</form>

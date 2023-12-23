@@ -1,0 +1,637 @@
+<div class="grid" *ngIf="showMaster">
+    <div class="card col-12" style="display: table-cell;">
+        <h4>Engagements</h4>
+        <div>
+            <p-table #dt [value]="engagements" [columns]="cols" dataKey="id" [rows]="10" [loading]="loading"
+                [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true"
+                [globalFilterFields]="['name','engagementType.type','templateType.type']" responsiveLayout="scroll"
+                [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [(selection)]="selectedEngagements" selectionMode="multiple" [scrollable]="true" scrollHeight="400px"
+                (onRowSelect)="handleSelect($event)">
+                <ng-template pTemplate="caption">
+                    <p-toolbar>
+                        <div class="p-toolbar-group-start">
+                            <p-button pTooltip="Add new engagement" icon="pi pi-user-plus" class="mr-2"
+                                (click)="openNew()"></p-button>
+                            <p-button pTooltip="Edit engagement" icon="pi pi-user-edit" class="mr-2"
+                                (click)="openNew('true')"
+                                [disabled]="selectedEngagements.length ==0 || selectedEngagements.length > 1"></p-button>
+                            <p-button pRipple pTooltip="Delete engagement" icon="pi pi-trash"
+                                class="p-button-danger mr-2" (click)="deleteselectedEngagements()"
+                                [disabled]="!selectedEngagements || !selectedEngagements.length"></p-button>
+                            <p-button pTooltip="Clear Filters" class="p-button-outlined mr-2" icon="pi pi-filter-slash"
+                                (click)="clear(dt)"></p-button>
+                            <p-button pTooltip="Export Engagements" icon="pi pi-file-export" (click)="dt.exportCSV()"
+                                styleClass="mr-2"></p-button>
+                        </div>
+                        <div class="p-toolbar-group-end">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" #filter
+                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                    placeholder="Search Keyword" class="w-full" />
+                            </span>
+                        </div>
+                    </p-toolbar>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="engagementName">
+                            <div class="flex justify-content-between align-items-center">
+                                Engagement Name
+                                <p-columnFilter type="text" field="engagementName" display="menu"
+                                    placeholder="Search by engagement name"></p-columnFilter>
+                                <p-sortIcon field="engagementName"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="engagementType.type">
+                            <div class="flex justify-content-between align-items-center">
+                                Engagement Type
+                                <p-columnFilter type="text" field="engagementType.type" display="menu"
+                                    placeholder="Search by engagement type"></p-columnFilter>
+                                <!-- <p-columnFilter field="engagementType.type" matchMode="in" display="menu"
+                                    [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                                    <ng-template pTemplate="header">
+                                        <div class="px-3 pt-3 pb-0">
+                                            <span class="font-bold">Engagement Type</span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                        <p-multiSelect [ngModel]="value" [options]="engagementTypes" placeholder="Any"
+                                            (onChange)="filter($event.value)" optionLabel="type">
+                                            <ng-template let-option pTemplate="item">
+                                                <div class="p-multiselect-representative-option">                                                    
+                                                    <span class="ml-2">{{option.type}}</span>
+                                                </div>
+                                            </ng-template>
+                                        </p-multiSelect>
+                                    </ng-template>
+                                </p-columnFilter> -->
+                                <p-sortIcon field="engagementType.type"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="templateType.type">
+                            <div class="flex justify-content-between align-items-center">
+                                Template
+                                <p-columnFilter type="text" field="templateType.type" display="menu"
+                                    placeholder="Search by template type"></p-columnFilter>
+                                <!-- <p-columnFilter field="templateType.type" matchMode="in" display="menu"
+                                    [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                                    <ng-template pTemplate="header">
+                                        <div class="px-3 pt-3 pb-0">
+                                            <span class="font-bold">Template Type</span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                        <p-multiSelect [ngModel]="value" [options]="templateTypes" placeholder="Any"
+                                            (onChange)="filter($event.value)" optionLabel="type">
+                                            <ng-template let-option pTemplate="item">
+                                                <div class="p-multiselect-representative-option">                                                    
+                                                    <span class="ml-2">{{option.type}}</span>
+                                                </div>
+                                            </ng-template>
+                                        </p-multiSelect>
+                                    </ng-template>
+                                </p-columnFilter> -->
+                                <p-sortIcon field="templateType.type"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-engagement>
+                    <tr [pSelectableRow]="engagement">
+                        <td>
+                            <p-tableCheckbox [value]="engagement"></p-tableCheckbox>
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{engagement.name}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{engagement.engagementType.type}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{engagement.templateType.type}}
+                        </td>
+                        <td>
+                            <i class="pi pi-eye" style="font-size: 2rem" (click)="onClick(engagement)"></i>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="4">No engagement found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="4">Loading engagements data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+<div class="grid" *ngIf="showKnowledge">
+    <div class="card col-12" style="display: table-cell;">
+        <div>
+            <p-table #dt1 [value]="questions" [columns]="cols1" dataKey="id" [rows]="10" [loading]="loading"
+                [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true"
+                [globalFilterFields]="['engagement.name','question','choice1','choice2','choice3','correctChoice','tidbitLink', 'tidbitText']"
+                responsiveLayout="scroll" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [(selection)]="selectedQuestions" selectionMode="multiple" [scrollable]="true" scrollHeight="400px"
+                (onRowSelect)="handleSelect($event)">
+                <ng-template pTemplate="caption">
+                    <p-toolbar>
+                        <div class="p-toolbar-group-start">
+                            <p-button pTooltip="Back to Engagements" icon="pi pi-directions-alt" class="mr-2"
+                                (click)="goToMain()"></p-button>
+                            <p-button pTooltip="Add new question" icon="pi pi-user-plus" class="mr-2"
+                                (click)="openNew1()"></p-button>
+                            <p-button pTooltip="Edit engagement" icon="pi pi-user-edit" class="mr-2"
+                                (click)="openNew1('true')"
+                                [disabled]="selectedQuestions.length ==0 || selectedQuestions.length > 1"></p-button>
+                            <p-button pRipple pTooltip="Delete question" icon="pi pi-trash" class="p-button-danger mr-2"
+                                (click)="deleteselectedQuestions()"
+                                [disabled]="!selectedQuestions || !selectedQuestions.length"></p-button>
+                            <p-button pTooltip="File Import" icon="pi pi-upload" styleClass="mr-2"
+                                (onClick)="showUpload()"></p-button>
+                            <p-button pTooltip="Clear Filters" class="p-button-outlined mr-2" icon="pi pi-filter-slash"
+                                (click)="clear(dt1)"></p-button>
+                            <p-button pTooltip="Export Questions" icon="pi pi-file-export" (click)="dt1.exportCSV()"
+                                styleClass="mr-2"></p-button>
+                        </div>
+                        <div class="p-toolbar-group-end">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" #filter1
+                                    (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                                    placeholder="Search Keyword" class="w-full" />
+                            </span>
+                        </div>
+                    </p-toolbar>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="engagement.name">
+                            <div class="flex justify-content-between align-items-center">
+                                Engagement Name
+                                <p-columnFilter type="text" field="engagement.name" display="menu"
+                                    placeholder="Search by engagement name"></p-columnFilter>
+                                <p-sortIcon field="engagement.name"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="question">
+                            <div class="flex justify-content-between align-items-center">
+                                Question
+                                <p-columnFilter type="text" field="question" display="menu"
+                                    placeholder="Search by question"></p-columnFilter>
+                                <p-sortIcon field="question"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="choice1">
+                            <div class="flex justify-content-between align-items-center">
+                                Choice 1
+                                <p-columnFilter type="text" field="choice1" display="menu"
+                                    placeholder="Search by choice1"></p-columnFilter>
+                                <p-sortIcon field="choice1"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="choice2">
+                            <div class="flex justify-content-between align-items-center">
+                                Choice 2
+                                <p-columnFilter type="text" field="choice2" display="menu"
+                                    placeholder="Search by choice2"></p-columnFilter>
+                                <p-sortIcon field="choice2"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="choice3">
+                            <div class="flex justify-content-between align-items-center">
+                                Choice 3
+                                <p-columnFilter type="text" field="choice3" display="menu"
+                                    placeholder="Search by choice3"></p-columnFilter>
+                                <p-sortIcon field="choice3"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="correctChoice">
+                            <div class="flex justify-content-between align-items-center">
+                                Correct Choice
+                                <p-columnFilter type="text" field="correctChoice" display="menu"
+                                    placeholder="Search by correct choice"></p-columnFilter>
+                                <p-sortIcon field="correctChoice"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="tidbitLink">
+                            <div class="flex justify-content-between align-items-center">
+                                TidBit Link
+                                <p-columnFilter type="text" field="tidbitLink" display="menu"
+                                    placeholder="Search by TidBit Link"></p-columnFilter>
+                                <p-sortIcon field="tidbitLink"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="tidbitText">
+                            <div class="flex justify-content-between align-items-center">
+                                TidBit Text
+                                <p-columnFilter type="text" field="tidbitText" display="menu"
+                                    placeholder="Search by TidBit Text"></p-columnFilter>
+                                <p-sortIcon field="tidbitText"></p-sortIcon>
+                            </div>
+                        </th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-question>
+                    <tr [pSelectableRow]="question">
+                        <td>
+                            <p-tableCheckbox [value]="question"></p-tableCheckbox>
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{question.engagement.name}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{question.question}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{question.choice1}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{question.choice2}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{question.choice3}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{question.correctChoice}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{question.tidbitLink}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{question.tidbitText}}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="4">No question found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="4">Loading questions data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+<div class="grid" *ngIf="showPromotion">
+    <div class="card col-12" style="display: table-cell;">
+        <div>
+            <p-table #dt2 [value]="promotions" [columns]="cols2" dataKey="id" [rows]="10" [loading]="loading"
+                [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true"
+                [globalFilterFields]="['promotionName','image','url','promotionText','tags']" responsiveLayout="scroll"
+                [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [(selection)]="selectedPromotions" selectionMode="multiple" [scrollable]="true" scrollHeight="400px"
+                (onRowSelect)="handleSelect($event)">
+                <ng-template pTemplate="caption">
+                    <p-toolbar>
+                        <div class="p-toolbar-group-start">
+                            <p-button pTooltip="Back to Engagements" icon="pi pi-directions-alt" class="mr-2"
+                                (click)="goToMain()"></p-button>
+                            <p-button pTooltip="Add new promotion" icon="pi pi-user-plus" class="mr-2"
+                                (click)="openNew2()"></p-button>
+                            <p-button pTooltip="Edit promotion" icon="pi pi-user-edit" class="mr-2"
+                                (click)="openNew2('true')"
+                                [disabled]="selectedPromotions.length ==0 || selectedPromotions.length > 1"></p-button>
+                            <p-button pRipple pTooltip="Delete promotion" icon="pi pi-trash"
+                                class="p-button-danger mr-2" (click)="deleteselectedPromotions()"
+                                [disabled]="!selectedPromotions || !selectedPromotions.length"></p-button>
+                            <!-- <p-button pTooltip="File Import" icon="pi pi-upload" styleClass="mr-2"
+                                (onClick)="showUpload1()"></p-button> -->
+                            <p-button pTooltip="Clear Filters" class="p-button-outlined mr-2" icon="pi pi-filter-slash"
+                                (click)="clear(dt2)"></p-button>
+                            <p-button pTooltip="Export Promotions" icon="pi pi-file-export" (click)="dt2.exportCSV()"
+                                styleClass="mr-2"></p-button>
+                        </div>
+                        <div class="p-toolbar-group-end">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" #filter1
+                                    (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                                    placeholder="Search Keyword" class="w-full" />
+                            </span>
+                        </div>
+                    </p-toolbar>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="promotionName">
+                            <div class="flex justify-content-between align-items-center">
+                                Promotion Name
+                                <p-columnFilter type="text" field="promotionName" display="menu"
+                                    placeholder="Search by promotion name"></p-columnFilter>
+                                <p-sortIcon field="promotionName"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="image">
+                            <div class="flex justify-content-between align-items-center">
+                                Image
+                                <p-columnFilter type="text" field="image" display="menu"
+                                    placeholder="Search by image"></p-columnFilter>
+                                <p-sortIcon field="image"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="promotionText">
+                            <div class="flex justify-content-between align-items-center">
+                                Promotion Text
+                                <p-columnFilter type="text" field="promotionText" display="menu"
+                                    placeholder="Search by promotion text"></p-columnFilter>
+                                <p-sortIcon field="promotionText"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="url">
+                            <div class="flex justify-content-between align-items-center">
+                                Image Url
+                                <p-columnFilter type="text" field="url" display="menu"
+                                    placeholder="Search by url"></p-columnFilter>
+                                <p-sortIcon field="url"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="tags">
+                            <div class="flex justify-content-between align-items-center">
+                                Tags
+                                <p-columnFilter type="text" field="tags" display="menu"
+                                    placeholder="Search by tags"></p-columnFilter>
+                                <p-sortIcon field="tags"></p-sortIcon>
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-promotion>
+                    <tr [pSelectableRow]="promotion">
+                        <td>
+                            <p-tableCheckbox [value]="promotion"></p-tableCheckbox>
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{promotion.promotionName}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{promotion.image}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{promotion.promotionText}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{promotion.url}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{promotion.tags}}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="6">No promotion found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="6">Loading promotions data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+<p-dialog [(visible)]="engagementDialog" [style]="{width: '450px', height: '450px'}" [header]="header" [modal]="true"
+    class="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="name">Name</label><label class="required">*</label>
+            <input type="text" pInputText id="name" [(ngModel)]="engagementName" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !engagementName}"
+                [disabled]="header == 'Edit Engagement'" />
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !engagementName" style="color: red;">Please enter
+                Engagement Name.</small>
+        </div>
+        <div class="field">
+            <label for="name">Type</label><label class="required">*</label>
+            <p-dropdown placeholder="Engagement Type" [(ngModel)]="engagementType" [style]="{'minWidth':'200px'}"
+                [options]="engagementTypes" optionLabel="type" required
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !engagementType}"></p-dropdown>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !engagementType" style="color: red;">Please select
+                engagement type.</small>
+        </div>
+        <div class="field">
+            <label for="name">Template</label><label class="required">*</label>
+            <p-dropdown placeholder="Template Type" [(ngModel)]="templateType" [style]="{'minWidth':'200px'}"
+                [options]="templateTypes" optionLabel="type" required
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !templateType}"></p-dropdown>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !templateType" style="color: red;">Please select
+                template type.</small>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+            (click)="saveEngagement()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="deleteEngagementDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span>Are you sure you want to delete selected engagements?</span>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+            (click)="deleteEngagementDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+            (click)="confirmDeleteSelected()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="questionDialog" [style]="{width: '450px', height: '450px'}" [header]="header1" [modal]="true"
+    class="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="name">Enter Question</label><label class="required">*</label>
+            <textarea type="text" pInputText id="name" [(ngModel)]="questionName" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !questionName}"
+                [disabled]="header == 'Edit Question'"></textarea>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !questionName" style="color: red;">Please enter
+                Question Name.</small>
+        </div>
+        <div class="field">
+            <label for="name">Choice 1</label><label class="required">*</label>
+            <p-inputSwitch [(ngModel)]="isSelectedChoice1"></p-inputSwitch>
+            <textarea type="text" pInputText id="name" [(ngModel)]="choice1" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !choice1}"></textarea>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !choice1" style="color: red;">Please enter
+                Choice 1.</small>
+        </div>
+        <div class="field">
+            <label for="name">Choice 2</label><label class="required">*</label>
+            <p-inputSwitch [(ngModel)]="isSelectedChoice2"></p-inputSwitch>
+            <textarea type="text" pInputText id="name" [(ngModel)]="choice2" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !choice2}"></textarea>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !choice2" style="color: red;">Please enter
+                Choice 2.</small>
+        </div>
+        <div class="field">
+            <label for="name">Choice 3</label><label class="required">*</label>
+            <p-inputSwitch [(ngModel)]="isSelectedChoice3"></p-inputSwitch>
+            <textarea type="text" pInputText id="name" [(ngModel)]="choice3" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !choice3}"></textarea>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !choice3" style="color: red;">Please enter
+                Choice 3.</small>
+        </div>
+        <div class="field">
+            <label for="name">Tidbid Link</label>
+            <!-- <input type="text" pInputText id="name" [(ngModel)]="tidbitLink" autofocus /> -->
+            <input type="text" pInputText id="tidbitLink" [(ngModel)]="tidbitLink" autofocus #tidbitlink="ngModel"
+                placeholder="https://example.com"
+                pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?" />
+            <small class="ng-dirty ng-invalid" *ngIf="tidbitlink.errors && tidbitlink.errors.pattern"
+                style="color: red;">Link is
+                invalid.</small>
+        </div>
+        <div class="field">
+            <label for="name">Tidbid Text</label>
+            <textarea type="text" pInputText id="name" [(ngModel)]="tidbitText" autofocus></textarea>
+        </div>
+        <div class="field">
+            <label for="name">Tags</label>
+            <textarea type="text" pInputText id="name" [(ngModel)]="tags" autofocus></textarea>
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+            (click)="hideDialog1()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveQuestion()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="deleteQuestionDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span>Are you sure you want to delete selected questions?</span>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+            (click)="deleteQuestionDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+            (click)="confirmDeleteSelectedQuestions()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="File Upload" [(visible)]="showFileUpload" [style]="{ width: '25vw', height: '15vw' }">
+    <table>
+        <tr>
+            <td>Click to export format</td>
+            <td><p-button icon="pi pi-file-export" (click)="exportFormat()"></p-button></td>
+        </tr>
+        <tr>
+            <td><br /><br />Select the file to upload</td>
+            <td><br /><br />
+                <p-fileUpload mode="basic" chooseLabel="" name="file" url="http://localhost:8082/engagement/{{selectedEngagementId}}/questions/import"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                    maxFileSize="1000000" (onUpload)="onUpload($event)">
+                </p-fileUpload>
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+            <td></td>
+        </tr>
+        <!-- <tr>
+            Click on the file to upload.
+             <td colspan="2"><p-button label="Submit" (click)="sendFiles()" icon="pi pi-check"></p-button> </td>
+        </tr> -->
+    </table>
+</p-dialog>
+
+<p-dialog [(visible)]="promotionDialog" [style]="{width: '450px', height: '450px'}" [header]="header2" [modal]="true"
+    class="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="name">Enter Promotion</label><label class="required">*</label>
+            <input type="text" pInputText id="name" [(ngModel)]="promotionName" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !promotionName}"
+                [disabled]="header == 'Edit Promotion'" />
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !promotionName" style="color: red;">Please enter
+                Promotion Name.</small>
+        </div>
+        <div class="field">
+            <label for="name">Promotion Text</label><label class="required">*</label>
+            <textarea type="text" pInputText id="name" [(ngModel)]="promotionText" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !promotionText}"></textarea>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !promotionText" style="color: red;">Please enter
+                Promotion Text.</small>
+        </div>
+        <div class="field">
+            <label for="name">Image Upload</label>           
+            <p-fileUpload name="demo[]" [customUpload]="true" (uploadHandler)="onUpload1($event)" accept="image/*"
+                maxFileSize="1000000" [multiple]="false" auto="true" mode="advanced"
+                [disabled]="uploadedFiles.length==1" (onRemove)="onClear($event)">
+            </p-fileUpload>
+
+        </div>
+        <div class="field">
+            <label for="name">URL</label>
+            <input type="text" pInputText id="name" [(ngModel)]="url" autofocus #tidbitlink="ngModel"
+                placeholder="https://example.com"
+                pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?" />
+            <small class="ng-dirty ng-invalid" *ngIf="tidbitlink.errors && tidbitlink.errors.pattern"
+                style="color: red;">Link is
+                invalid.</small>
+        </div>
+        <div class="field">
+            <label for="name">Tags</label>
+            <input type="text" pInputText id="name" [(ngModel)]="tags1" autofocus />
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+            (click)="hideDialog2()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+            (click)="savePromotion()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="deletePromotionDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span>Are you sure you want to delete selected promotions?</span>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+            (click)="deletePromotionDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+            (click)="confirmDeleteSelectedPromotions()"></button>
+    </ng-template>
+</p-dialog>

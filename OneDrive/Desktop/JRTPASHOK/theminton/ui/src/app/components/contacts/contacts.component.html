@@ -1,0 +1,543 @@
+<div class="grid">
+    <!-- <div class="col-12"> -->
+    <div class="card col-9" style="display: table-cell;">
+        <h4>Contacts</h4>
+        <div>
+            <p-table #dt1 [value]="contacts" [columns]="cols" dataKey="id" [rows]="10" [loading]="loading"
+                [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true"
+                [globalFilterFields]="['firstName','lastName','primaryNumber','city', 'state', 'country']"
+                responsiveLayout="scroll" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [(selection)]="selectedContacts" selectionMode="multiple" [scrollable]="true" scrollHeight="400px"
+                (onRowSelect)="handleSelect($event)">
+                <ng-template pTemplate="caption">
+                    <p-toolbar>
+                        <div class="p-toolbar-group-start">
+                            <p-button pTooltip="Add new contact" icon="pi pi-user-plus" class="mr-2"
+                                (click)="openNew()"></p-button>
+                            <p-button pTooltip="Edit contact" icon="pi pi-user-edit" class="mr-2"
+                                (click)="openNew('true')"
+                                [disabled]="selectedContacts.length ==0 || selectedContacts.length > 1"></p-button>
+                            <p-button pRipple pTooltip="Delete contact" icon="pi pi-trash" class="p-button-danger mr-2"
+                                (click)="deleteselectedContacts()"
+                                [disabled]="!selectedContacts || !selectedContacts.length"></p-button>
+                            <p-button pTooltip="Clear Filters" class="p-button-outlined mr-2" icon="pi pi-filter-slash"
+                                (click)="clear(dt1)"></p-button>
+                            <!-- <p-button pTooltip="Edit columns"  icon="pi pi-align-justify" styleClass="mr-2"></p-button> -->
+                            <p-button pTooltip="File Import" icon="pi pi-upload" styleClass="mr-2"
+                                (onClick)="showUpload()"></p-button>
+                            <p-button pTooltip="Add to Group" icon="pi pi-users" styleClass="mr-2"
+                                (onClick)="addToGroup()"
+                                [disabled]="selectedContacts.length ==0 || selectedContacts.length > 1"></p-button>
+                            <p-button pTooltip="Send Individual Message" icon="pi pi-comment" styleClass="mr-2"
+                                (onClick)="sendMessage()"></p-button>
+                            <p-button pTooltip="Export Contacts" icon="pi pi-file-export" (click)="dt1.exportCSV()"
+                                styleClass="mr-2"></p-button>
+                        </div>
+
+
+                        <div class="p-toolbar-group-end">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" #filter
+                                    (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                                    placeholder="Search Keyword" class="w-full" />
+                            </span>
+                        </div>
+                    </p-toolbar>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="firstName">
+                            <div class="flex justify-content-between align-items-center">
+                                First Name
+                                <p-columnFilter type="text" field="firstName" display="menu"
+                                    placeholder="Search by first name"></p-columnFilter>
+                                <p-sortIcon field="firstName"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="lastName">
+                            <div class="flex justify-content-between align-items-center">
+                                Last Name
+                                <p-columnFilter type="text" field="lastName" display="menu"
+                                    placeholder="Search by last name"></p-columnFilter>
+                                <p-sortIcon field="lastName"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="dob">
+                            <div class="flex justify-content-between align-items-center">
+                                DOB
+                                <p-columnFilter type="date" field="dob" display="menu"
+                                    placeholder="mm/dd/yyyy"></p-columnFilter>
+                                <p-sortIcon field="dob"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="primaryNumber">
+                            <div class="flex justify-content-between align-items-center">
+                                Phone Number
+                                <p-columnFilter type="numeric" field="primaryNumber" display="menu"></p-columnFilter>
+                                <p-sortIcon field="primaryNumber"></p-sortIcon>
+                            </div>
+                        </th>
+
+                        <!-- <th pSortableColumn="secondaryNumber">
+                            <div class="flex justify-content-between align-items-center">
+                                Secondary Phone Number
+                                <p-columnFilter type="numeric" field="secondaryNumber" display="menu"></p-columnFilter>
+                                <p-sortIcon field="secondaryNumber"></p-sortIcon>
+                            </div>
+                        </th> -->
+
+                        <th pSortableColumn="primaryEmail">
+                            <div class="flex justify-content-between align-items-center">
+                                Email ID
+                                <p-columnFilter type="email" field="primaryEmail" display="menu"
+                                    placeholder="Search by Email"></p-columnFilter>
+                                <p-sortIcon field="primaryEmail"></p-sortIcon>
+                            </div>
+                        </th>
+
+                        <!-- <th pSortableColumn="secondaryEmail">
+                            <div class="flex justify-content-between align-items-center">
+                                Secondary Email ID
+                                <p-columnFilter type="email" field="secondaryEmail" display="menu"
+                                    placeholder="Search by Email"></p-columnFilter>
+                                <p-sortIcon field="secondaryEmail"></p-sortIcon>
+                            </div>
+                        </th> -->
+
+                        <th pSortableColumn="fieldOfInterest">
+                            <div class="flex justify-content-between align-items-center">
+                                Interested Field
+                                <p-columnFilter type="text" field="fieldOfInterest" display="menu"
+                                    placeholder="Search by Fields Of Interest"></p-columnFilter>
+                                <p-sortIcon field="fieldOfInterest"></p-sortIcon>
+                            </div>
+                        </th>
+
+                        <th pSortableColumn="courseName">
+                            <div class="flex justify-content-between align-items-center">
+                                Course Name
+                                <p-columnFilter type="text" field="courseName" display="menu"
+                                    placeholder="Search by Course Name"></p-columnFilter>
+                                <p-sortIcon field="courseName"></p-sortIcon>
+                            </div>
+                        </th>
+
+                        <th pSortableColumn="courseDate">
+                            <div class="flex justify-content-between align-items-center">
+                                Course Date
+                                <p-columnFilter type="date" field="courseDate" display="menu"
+                                    placeholder="mm/dd/yyyy"></p-columnFilter>
+                                <p-sortIcon field="courseDate"></p-sortIcon>
+                            </div>
+                        </th>
+
+                        <th pSortableColumn="city">
+                            <div class="flex justify-content-between align-items-center">
+                                City
+                                <p-columnFilter type="text" field="city" display="menu"
+                                    placeholder="Search by City"></p-columnFilter>
+                                <p-sortIcon field="city"></p-sortIcon>
+                            </div>
+                        </th>
+
+                        <th pSortableColumn="state">
+                            <div class="flex justify-content-between align-items-center">
+                                State
+                                <p-columnFilter type="text" field="state" display="menu"
+                                    placeholder="Search by State"></p-columnFilter>
+                                <p-sortIcon field="state"></p-sortIcon>
+                            </div>
+                        </th>
+
+                        <!-- <th pSortableColumn="country">
+                            <div class="flex justify-content-between align-items-center">
+                                Country
+                                <p-columnFilter type="text" field="country" display="menu"
+                                    placeholder="Search by Country"></p-columnFilter>
+                                <p-sortIcon field="country"></p-sortIcon>
+                            </div>
+                        </th> -->
+
+                        <th pSortableColumn="currentCompany">
+                            <div class="flex justify-content-between align-items-center">
+                                Company Name
+                                <p-columnFilter type="text" field="currentCompany" display="menu"
+                                    placeholder="Search by Company Name"></p-columnFilter>
+                                <p-sortIcon field="currentCompany"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="currentPosition">
+                            <div class="flex justify-content-between align-items-center">
+                                Position
+                                <p-columnFilter type="text" field="currentPosition" display="menu"
+                                    placeholder="Search by Position"></p-columnFilter>
+                                <p-sortIcon field="currentPosition"></p-sortIcon>
+                            </div>
+                        </th>
+                        <!-- <th pSortableColumn="linkedInId">
+                            <div class="flex justify-content-between align-items-center">
+                                LinkedIn ID
+                                <p-columnFilter type="text" field="linkedInId" display="menu"
+                                    placeholder="Search by LinkedIn ID"></p-columnFilter>
+                                <p-sortIcon field="linkedInId"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="instagramId">
+                            <div class="flex justify-content-between align-items-center">
+                                Instagram ID
+                                <p-columnFilter type="text" field="instagramId" display="menu"
+                                    placeholder="Search by  Instagram ID"></p-columnFilter>
+                                <p-sortIcon field="instagramId"></p-sortIcon>
+                            </div>
+                        </th>
+                        <th pSortableColumn="faceBookId">
+                            <div class="flex justify-content-between align-items-center">
+                                Facebook ID
+                                <p-columnFilter type="text" field="faceBookId" display="menu"
+                                    placeholder="Search by Facebook ID"></p-columnFilter>
+                                <p-sortIcon field="faceBookId"></p-sortIcon>
+                            </div>
+                        </th> -->
+
+
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-contact>
+                    <tr [pSelectableRow]="contact">
+                        <td>
+                            <p-tableCheckbox [value]="contact"></p-tableCheckbox>
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{contact.firstName}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{contact.lastName}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{contact.dob | date: 'MM/dd/yyyy'}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{contact.primaryNumber}}
+                        </td>
+                        <!-- <td style="min-width: 10rem;">
+                            {{contact.secondaryNumber}}
+                        </td> -->
+                        <td style="min-width: 12rem;">
+                            {{contact.primaryEmail}}
+                        </td>
+
+                        <!-- <td style="min-width: 12rem;">
+                            {{contact.secondaryEmail}}
+                        </td> -->
+                        <td style="min-width: 12rem;">
+                            {{contact.fieldOfInterest}}
+                        </td>
+
+                        <td style="min-width: 12rem;">
+                            {{contact.courseName}}
+                        </td>
+                        <td style="min-width: 10rem;">
+                            {{contact.courseDate | date: 'MM/dd/yyyy'}}
+                        </td>
+
+                        <td style="min-width: 12rem;">
+                            {{contact.city}}
+                        </td>
+
+                        <td style="min-width: 12rem;">
+                            {{contact.state}}
+                        </td>
+
+                        <!-- <td style="min-width: 12rem;">
+                            {{contact.country}}
+                        </td> -->
+
+                        <td style="min-width: 12rem;">
+                            {{contact.currentCompany}}
+                        </td>
+
+                        <td style="min-width: 12rem;">
+                            {{contact.currentPosition}}
+                        </td>
+                        <!-- <td style="min-width: 12rem;">
+                            {{contact.linkedInId}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{contact.instagramId}}
+                        </td>
+                        <td style="min-width: 12rem;">
+                            {{contact.faceBookId}}
+                        </td> -->
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="19">No contacts found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="19">Loading contacts data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+    <div class="card col-3">
+        <h4></h4>
+
+        <div>
+            <img class="profile-image" src="assets/layout/images/avatar-profile.png" alt="demo" />
+            <br />
+            Name : {{contactRightPane?.firstName}} &nbsp; {{contactRightPane?.lastName}}<br /> <br />
+            Phone Number : {{contactRightPane?.primaryNumber}} <br /><br />
+            Email Id : {{contactRightPane?.primaryEmail}}<br /><br />
+            Location : {{contactRightPane?.city}}, &nbsp; {{contactRightPane?.state}}, &nbsp;
+            {{contactRightPane?.country}}<br /> <br />
+            Date Of Birth : {{contactRightPane?.dob | date: 'MM/dd/yyyy'}}<br /><br />
+            Fields Of Interest : {{contactRightPane?.fieldOfInterest}}<br /><br />
+            Last Contacted : <br /> <br />
+            Deals Closed : <br /><br />
+            Deals Open : <br /><br />
+            Revenue Generated : <br /> <br />
+            Groups : <br />
+            <p class="card-text" *ngFor="let group of contactRightPane?.groupResponses"> {{ group.groupName}}</p><br />
+            Campaigns : <br /><br />
+            <p-toolbar>
+                <div class="p-toolbar-group-center">
+                    <p-button [pTooltip]="contactRightPane?.linkedInId" icon="pi pi-linkedin" class="mr-2"></p-button>
+                    <p-button [pTooltip]="contactRightPane?.instagramId" icon="pi pi-instagram" class="mr-2"></p-button>
+                    <p-button [pTooltip]="contactRightPane?.faceBookId" icon="pi pi-facebook" class="mr-2"></p-button>
+                </div>
+            </p-toolbar>
+        </div>
+
+
+    </div>
+    <!-- </div> -->
+</div>
+
+
+<!-- <div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toolbar>
+                <div class="p-toolbar-group-start">Notes</div>
+                <div class="p-toolbar-group-center"></div>
+                <div class="p-toolbar-group-end">
+                    <p-button icon="pi pi-plus" pTooltip="Add Notes" styleClass="mr-2"
+                        (onClick)="showNotes()"></p-button>
+                </div>
+            </p-toolbar>
+            <ul>
+                <li *ngFor="let note of allNotes">
+                    <b><i>{{note.createdAt}} </i></b>:<b><i>{{note.createdBy.name}} </i>:</b> {{note.note}} <br />
+                </li>
+            </ul>
+        </div>
+    </div>
+</div> -->
+
+<p-dialog [(visible)]="deletecontactsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+    <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span>Are you sure you want to delete selected contacts?</span>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+            (click)="deletecontactsDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+            (click)="confirmDeleteSelected()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="File Upload" [(visible)]="showFileUpload" [style]="{ width: '25vw', height: '15vw' }">
+    <table>
+        <tr>
+            <td>Click to export format</td>
+            <td><p-button icon="pi pi-file-export" (click)="exportFormat()"></p-button></td>
+        </tr>
+        <tr>
+            <td><br /><br />Select the file to upload</td>
+            <td><br /><br />
+                <p-fileUpload mode="basic" chooseLabel="" name="file"
+                    url="http://localhost:8082/contacts/import"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                    maxFileSize="1000000" (onUpload)="onUpload($event)">
+                </p-fileUpload>                
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+            <td></td>
+        </tr>
+        <!-- <tr>
+            Click on the file to upload.
+             <td colspan="2"><p-button label="Submit" (click)="sendFiles()" icon="pi pi-check"></p-button> </td>
+        </tr> -->
+    </table>
+</p-dialog>
+
+<p-dialog header="Add Notes" [(visible)]="showAddNotes" [style]="{ width: '40vw', height: '300px' }">
+    <textarea rows="5" cols="60" [(ngModel)]="notes" pInputTextarea></textarea>
+    <br /><br />
+    <p-button label="Submit" (click)="addNotes()" icon="pi pi-check"></p-button>
+</p-dialog>
+
+<p-dialog header="Send Message" [(visible)]="showSendMessage" [style]="{ width: '40vw', height: '350px' }">
+    To: <input type="text" pInputText />
+    <br /> <br />
+    <textarea rows="5" cols="60" pInputTextarea></textarea>
+    <br /><br />
+    <p-button label="Send" icon="pi pi-check"></p-button>
+</p-dialog>
+
+<p-dialog header="Add to Group" [(visible)]="showAddToGroup" [style]="{ width: '25vw', height: '300px' }">
+    <table style="width: 200px;">
+        <tr>
+            <td colspan="2">Select existing group</td>
+
+        </tr>
+        <tr>
+            <td><p-dropdown [options]="groups" [(ngModel)]="selectedGroup" optionLabel="name"></p-dropdown></td>
+            <td><p-button pTooltip="Add to existing group" icon="pi pi-plus" (click)="addToGroupApi('old')"></p-button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><br /> <br /> Create new group</td>
+        </tr>
+        <tr>
+            <td><input type="text" [(ngModel)]="groupName" pInputText /></td>
+            <td><p-button pTooltip="Add to group" icon="pi pi-plus" (click)="addToGroupApi('new')"></p-button></td>
+        </tr>
+    </table>
+</p-dialog>
+
+<p-dialog [(visible)]="contactDialog" [style]="{width: '450px'}" [header]="header" [modal]="true" class="p-fluid">
+    <ng-template pTemplate="content">
+        <!-- <img [src]="'assets/demo/images/product/' + product.image" [alt]="product.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="product.image"> -->
+        <div class="field">
+            <label for="name">First Name</label><label class="required">*</label>
+            <input type="text" pInputText id="firstname" [(ngModel)]="firstName" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !firstName}" [disabled]="header == 'Edit Contact'" />
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !firstName" style="color: red;">First Name is
+                required.</small>
+        </div>
+        <div class="field">
+            <label for="name">Last Name</label><label class="required">*</label>
+            <input type="text" pInputText id="lastname" [(ngModel)]="lastName" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !lastName}" [disabled]="header == 'Edit Contact'" />
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !lastName" style="color: red;">Last Name is
+                required.</small>
+        </div>
+        <div class="field">
+            <label for="name">Date Of Birth</label>
+            <p-calendar id="dob" [showIcon]="true" inputId="icon" [(ngModel)]="dob" [utc]="true" autofocus></p-calendar>
+
+        </div>
+        <div class="field">
+            <label for="name">Primary Phone Number</label><label class="required">*</label>
+            <p-inputMask mask="9999999999" id="primaryPhone" [(ngModel)]="primaryNumber" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !primaryNumber}"
+                [disabled]="header == 'Edit Contact'"></p-inputMask>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !primaryNumber" style="color: red;">Primary Phone
+                Number is
+                required.</small>
+        </div>
+        <div class="field">
+            <label for="name">Secondary Phone Number</label>
+            <p-inputMask mask="9999999999" id="secondaryPhone" [(ngModel)]="secondaryNumber" autofocus></p-inputMask>
+
+        </div>
+        <div class="field">
+            <label for="name">Primary Email Id</label>
+            <input type="email" pInputText id="primaryEmail" [(ngModel)]="primaryEmail" autofocus
+                #primaryemail="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" />
+            <small class="ng-dirty ng-invalid" *ngIf="primaryemail.errors && primaryemail.errors.pattern"
+                style="color: red;">Email is
+                invalid.</small>
+        </div>
+        <div class="field">
+            <label for="name">Secondary Email Id</label>
+            <input type="email" pInputText id="secondaryEmail" [(ngModel)]="secondaryEmail" autofocus
+                #secondaryemail="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" />
+            <small class="ng-dirty ng-invalid" *ngIf="secondaryemail.errors && secondaryemail.errors.pattern"
+                style="color: red;">Email is
+                invalid.</small>
+        </div>
+        <div class="field">
+            <label for="name">Fields of Interest</label>
+            <input type="text" pInputText id="foi" [(ngModel)]="fieldOfInterest" autofocus />
+
+        </div>
+        <div class="field">
+            <label for="name">Course Name</label>
+            <input type="text" pInputText id="coursename" [(ngModel)]="courseName" autofocus />
+
+        </div>
+        <div class="field">
+            <label for="name">Course Date</label><label class="required">*</label>
+            <p-calendar id="coursedate" [showIcon]="true" inputId="icon" [(ngModel)]="courseDate" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !courseDate}"></p-calendar>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseDate" style="color: red;">Course Date is
+                required.</small>
+        </div>
+        <div class="field">
+            <label for="name">City</label><label class="required">*</label>
+            <input type="text" pInputText id="city" [(ngModel)]="city" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !city}" />
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !city" style="color: red;">City is
+                required.</small>
+        </div>
+        <div class="field">
+            <label for="name">State</label><label class="required">*</label>
+            <input type="text" pInputText id="state" [(ngModel)]="state" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !state}" />
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !state" style="color: red;">State is
+                required.</small>
+        </div>
+        <div class="field">
+            <label for="name">Country</label><label class="required">*</label>
+            <input type="text" pInputText id="country" [(ngModel)]="country" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !country}" />
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !country" style="color: red;">Country is
+                required.</small>
+        </div>
+        <div class="field">
+            <label for="name">Company Name</label>
+            <input type="text" pInputText id="companyname" [(ngModel)]="currentCompany" autofocus />
+
+        </div>
+        <div class="field">
+            <label for="name">Position</label>
+            <input type="text" pInputText id="position" [(ngModel)]="currentPosition" autofocus />
+
+        </div>
+        <div class="field">
+            <label for="name">LinkedIn Id</label>
+            <input type="text" pInputText id="linkedin" [(ngModel)]="linkedInId" autofocus />
+
+        </div>
+        <div class="field">
+            <label for="name">Instagram Id</label>
+            <input type="text" pInputText id="instagram" [(ngModel)]="instagramId" autofocus />
+
+        </div>
+        <div class="field">
+            <label for="name">Facebook Id</label>
+            <input type="text" pInputText id="facebook" [(ngModel)]="faceBookId" autofocus />
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveContact()"></button>
+    </ng-template>
+</p-dialog>

@@ -1,0 +1,101 @@
+<div class="login-body">
+    <div class="login-wrapper">
+        <div class="login-panel">
+            <a [routerLink]="['/']" class="logo">
+                <img src="assets/layout/images/logo-dark.png" alt="" />
+            </a>
+            <div class="card" *ngIf="login">
+                <div class="card-body">
+                    <div class="login-form">
+
+                        <h2>Login To Your Account</h2>
+                        You don't have an account? <a href="#" (click)="showPanel('signUp')">Signup</a>
+                        <br /> <br />
+
+                        <input type="text" autocomplete="off" [(ngModel)]="email" pInputText placeholder="Email">
+
+                        <input type="password" autocomplete="off" [(ngModel)]="passcode" pInputText
+                            placeholder="Password">
+                        <button pButton pRipple label="LOGIN" type="button" (click)="authenticateUser()"></button>
+                        <br /><br />
+                        <table align="center">
+                            <tr>
+                                <td><asl-google-signin-button type='icon' size='medium'></asl-google-signin-button></td>
+                                <td> </td>
+                                <td><p-button icon="pi pi-facebook" styleClass="p-button-rounded" *ngIf="false" 
+                                        (click)="authenticateFacebook()"></p-button></td>
+                            </tr>
+                        </table>
+
+                        &nbsp;&nbsp;
+
+
+                        <br /><br /><br />
+                        <p-button label="Forget Password" styleClass="p-button-link"
+                            (click)="showPanel('forgetPassword')"></p-button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card" *ngIf="forgetPassword">
+                <div class="card-body">
+                    <div class="login-form">
+                        <h2>Forget Password</h2>
+                        <br /> <br />
+
+                        <input type="text" autocomplete="off" [(ngModel)]="email" pInputText placeholder="Email">
+
+                        <button pButton pRipple label="Submit" type="button" (click)="sendPasswordLink()"></button>
+                        <br /><br />
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" *ngIf="signUp">
+                <div class="card-body">
+                    <div class="login-form">
+                        <h2>Sign Up</h2>
+                        <br /> <br />
+                        <form name="signUpFrom" [formGroup]="signUpForm" (submit)="signUpDetails()">
+                            <table>
+                                <tr>
+                                    <td>First Name</td>
+                                    <td><input type="text" formControlName="firstName" pInputText /></td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name</td>
+                                    <td><input type="text" pInputText formControlName="lastName" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Phone number</td>
+                                    <td><p-inputMask mask="9999999999" placeholder="0000000000"
+                                            formControlName="phoneNumber"></p-inputMask></td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td><input type="text" pInputText formControlName="email" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Password</td>
+                                    <td><input type="password" pInputText formControlName="password" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Re-Password</td>
+                                    <td><input type="password" pInputText formControlName="rePassword" /></td>
+                                </tr>
+
+                            </table>
+                            <br /> <br />
+                            <button pButton pRipple label="Submit" type="submit"></button>
+                        </form>
+
+                        <br /><br />
+                    </div>
+                </div>
+            </div>
+
+            <p>@2023</p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,475 @@
+{
+	"info": {
+		"_postman_id": "f525d116-d298-474e-a06d-e45b78db2e96",
+		"name": "Freelancing-project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTiIsImlhdCI6MTY4NzY5NDk5MywiaXNzIjoiZGVtb3Byb2plY3Rjb21wYW55IiwiZXhwIjoxNjg4NTU4OTkzfQ.f24NNKXfwyYge9NhOa1Ht6iAAfaRXzbhlAV3krNtbt9j7FpVuz7TuAwyIiw0RX5w3hR3bffFETszyc-t7fRhSQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/user/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/user/getall",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"getall"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwicm9sZXMiOiIiLCJpYXQiOjE2ODc2OTM0MjgsImlzcyI6ImRlbW9wcm9qZWN0Y29tcGFueSIsImV4cCI6MTY4ODU1NzQyOH0.0HSGfQ3NE4A6L04BX6x6dswUzQfm1G329F6TCixh8Dzjy4wTmgHTNGVV6TSh2Uvuh1oLyqkREi0LVutISxoSAQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"super\",\r\n    \"lastName\": \"test\",\r\n    \"userType\": \"Free\",\r\n    \"role\": \"ADMIN\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/users/update/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"update",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete user",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/user/delete/8",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"delete",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get role",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwicm9sZXMiOiIiLCJpYXQiOjE2ODc4NzMzMjksImlzcyI6ImRlbW9wcm9qZWN0Y29tcGFueSIsImV4cCI6MTY4ODczNzMyOX0._9fAqUgYx-jhWjE4yemAFywohZCZgayQ8ZyTuTHSQoSqZPf1THfQy9EKzqIXgGcOhnemLc-pizzFECoS6ch3DA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/admin/role/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"role",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all roles",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwicm9sZXMiOiJST0xFX0FETUlOIiwiaWF0IjoxNjg3NjM1NzkzLCJpc3MiOiJkZW1vcHJvamVjdGNvbXBhbnkiLCJleHAiOjE2ODg0OTk3OTN9.L7UvBxNHMRDfR_aqGQRTm9a_UEq_fwRpRBY9fBZ50vj9MdFZMND7VSGUYjj_tvFTNuVJTK_H99nC5Uv-8fhTrw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/admin/role/getall",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"role",
+						"getall"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new role",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"ADMIN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/admin/role/create",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"role",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete usertype",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/usertype/delete/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usertype",
+						"delete",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all user types",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwicm9sZXMiOiIiLCJpYXQiOjE2ODc2OTM0MjgsImlzcyI6ImRlbW9wcm9qZWN0Y29tcGFueSIsImV4cCI6MTY4ODU1NzQyOH0.0HSGfQ3NE4A6L04BX6x6dswUzQfm1G329F6TCixh8Dzjy4wTmgHTNGVV6TSh2Uvuh1oLyqkREi0LVutISxoSAQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/admin/usertype/getall",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"usertype",
+						"getall"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new usertype",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Premium\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/admin/usertype/create",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"usertype",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signup -registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"test user\",\r\n  \"firstName\":\"kalpana\",\r\n  \"lastName\":\"ganvir\",\r\n  \"phoneNumber\": \"2323\",\r\n  \"email\":\"USER@gmail.com\",\r\n\"password\":123456\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/auth/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modify user profile Copy",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\":\"kalpana\",\r\n  \"lastName\":\"ganvir\",\r\n  \"userType\": \"Free\",\r\n    \"role\":\"USER\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/update/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"update",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1 ) login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"testadmin@gmail.com\",\r\n    \"password\":\"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change password",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwicm9sZXMiOiJST0xFX0FETUlOIiwiaWF0IjoxNjg3NjM1NzkzLCJpc3MiOiJkZW1vcHJvamVjdGNvbXBhbnkiLCJleHAiOjE2ODg0OTk3OTN9.L7UvBxNHMRDfR_aqGQRTm9a_UEq_fwRpRBY9fBZ50vj9MdFZMND7VSGUYjj_tvFTNuVJTK_H99nC5Uv-8fhTrw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"testuser@gmail.com\",\r\n    \"newPassword\" : \"admin\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/user/resetpassword",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"resetpassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reset password with token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDUiLCJpYXQiOjE2ODgyMDgzNTMsImlzcyI6InRoZW1pbnRvbi5jb20iLCJleHAiOjE2ODgyMDg2NTN9.iW0EcW-yhWnXxejPk-3xmZ5sfivrE2MOY0MCV9YFaz9jbplzw6fQYbopXkckKX30fJMIL8YEXGQOVvrI4tixKw\",\r\n    \"password\":\"test123\",\r\n    \"confirmPassword\":\"test123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/resetpassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"resetpassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "send email for forgot password Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/forgetpassword/sendlink/kpganvir28@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"forgetpassword",
+						"sendlink",
+						"kpganvir28@gmail.com"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

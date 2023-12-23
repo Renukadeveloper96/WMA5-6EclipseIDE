@@ -1,0 +1,209 @@
+<h2>Contacts</h2>
+<form [formGroup]="contactForm">
+    <div class="grid">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4> Demographic </h4>
+                    <br /><br /> <br />
+                </div>
+                <div class="card-body">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td colspan="2">
+                                <label>First Name</label><label class="required">*</label>
+                                <div class="field">
+                                    <label htmlfor="firstName">Firstname</label>
+                                    <input pInputText id="firstname" type="text" class="p-inputtext p-component p-element">
+                                </div>
+                            </td>
+                           
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Last Name</label><label class="required">*</label>
+                            </td>
+                            <td>
+                                <input type="text" pInputText />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>DOB</label><label class="required">*</label>
+                            </td>
+                            <td>
+                                <p-calendar [showIcon]="true"></p-calendar>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <label>City</label><label class="required">*</label>
+                            </td>
+                            <td>
+                                <input type="text" pInputText />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>State</label>
+                            </td>
+                            <td>
+                                <input type="text" pInputText />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Country</label>
+                            </td>
+                            <td>
+                                <input type="text" pInputText />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+
+            <div class="card">
+                <div class="card-header">
+                    <h4> Contact Info </h4>
+                    <br /><br /> <br />
+                </div>
+                <div class="card-body">
+                    <table style="width: 100%;">
+                        <tr style="width: 70%;">
+                            <td>
+                                <label>Primary Phone Number</label><label class="required">*</label>
+                            </td>
+                            <td>
+                                <p-inputMask mask="999-999-9999"></p-inputMask>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label>Seconday Phone Number</label>
+                            </td>
+                            <td>
+                                <p-inputMask mask="999-999-9999"></p-inputMask>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Primary Email Address</label><label class="required">*</label>
+                            </td>
+                            <td>
+                                <input type="text" pInputText />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Secondary Email Address</label>
+                            </td>
+                            <td>
+                                <input type="text" pInputText />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Current Company</label>
+                            </td>
+                            <td>
+                                <input type="text" pInputText />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Current Position</label>
+                            </td>
+                            <td>
+                                <input type="text" pInputText />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4> Course </h4>
+                    <br /><br /> <br />
+                </div>
+                <div class="card-body">
+                    <table style="width: 100%;">
+                        <tr style="width: 70%;">
+                            <td>
+                                <label>Course Name</label>
+                            </td>
+                            <td>
+                                <input type="text" pInputText />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Course Date</label>
+                            </td>
+                            <td>
+                                <p-calendar [showIcon]="true"></p-calendar>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Field of Intrest</label>
+                            </td>
+                            <td>
+                                <input type="text" pInputText />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4> Social Media </h4>
+                    <br /><br /> <br />
+                </div>
+                <div class="card-body">
+                    <table style="width: 100%;">
+                        <tr style="width: 80%;">
+                            <td>
+                                <label>LinkedIn ID </label>
+                            </td>
+                            <td>
+                                <input type="text" pInputText />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Instagram ID </label>
+                            </td>
+                            <td>
+
+                                <input type="text" pInputText />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label> Facebook ID </label>
+                            </td>
+                            <td>
+                                <input type="text" pInputText />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p-button label="Save" icon="pi pi-check"></p-button> &nbsp;&nbsp;
+    <p-button label="Cancel" (click)="moveBack()" styleClass="p-button-secondary"
+        icon="pi pi-chevron-circle-left"></p-button>
+</form>

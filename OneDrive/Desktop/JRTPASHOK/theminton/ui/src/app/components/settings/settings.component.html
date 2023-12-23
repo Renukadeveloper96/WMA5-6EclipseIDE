@@ -1,0 +1,31 @@
+<h3>Settings</h3>
+<div class="card">
+    <div class="card-body">
+        <table>
+            <tr>
+                <td>Billing Plan <span><i class="pi pi-dollar" style="font-size: 1rem"></i></span> : </td>
+                <td><p-dropdown [options]="billingPlans" [(ngModel)]="selectedPlan" optionLabel="name"></p-dropdown>
+                </td>
+            </tr>
+            <tr>
+                <td>Communication Platform <span><i class="pi pi-comments" style="font-size: 1rem"></i></span> : </td>
+                <td>                    
+                    <div class="field-checkbox">
+                        <p-checkbox  [(ngModel)]="valCheckWhatsapp" binary="true" inputId="wp"></p-checkbox>
+                        <label for="wp"><i class="pi pi-whatsapp" style="font-size: 3rem"></i></label>
+                    </div>
+                    <div class="field-checkbox">
+                        <p-checkbox  [(ngModel)]="valCheckTelegram" binary="true" inputId="tg"></p-checkbox>
+                        <label for="tg"><i class="pi pi-telegram" style="font-size: 3rem"></i></label> 
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Number of User Interactions Per day Limit : </td>
+                <td>
+                    <p-inputNumber [(ngModel)]="noOfUsersLimit"  [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"> </p-inputNumber></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<p-button label="Save" icon="pi pi-check" (click)="addSetting()"></p-button>
