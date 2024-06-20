@@ -1,0 +1,26 @@
+package com.upendra.rai.enums;
+
+public enum DataType {
+  TEXT, // MIN, MAX
+  EMAIL, // EMAIL
+  LONG_TEXT, // MIN, MAX
+  RICH_TEXT, //
+  NUMBER, // MIN, MAX
+  BOOLEAN, //
+  DROPDOWN, //
+  MULTI_SELECT, // MIN_COUNT, MAX_COUNT
+  FILE, // MAX_SIZE, ALLOWED_FORMATS
+  IMAGE, // MAX_SIZE, ALLOWED_FORMATS
+  AUDIO, // MAX_SIZE, ALLOWED_FORMATS
+  VIDEO, // MAX_SIZE, ALLOWED_FORMATS
+  COLOR, //
+  SLIDESHOW, //
+  TIME, //
+  DATE, //
+  MONTH, //
+  YEAR, //
+  DATE_TIME, //
+  APP_SCREEN, //
+  APP_ICON, //
+  TAGS // MIN_COUNT, MAX_COUNT, DATA_TYPE
+}
